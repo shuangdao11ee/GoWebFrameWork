@@ -6,24 +6,24 @@ import (
 )
 
 func main() {
-	accesstoken := gee.AccessTokenJson{}
-	go accesstoken.CountAndReget()
-	DB := gee.DB{}
-	DB.Init("./user.db")
-	r := gee.New(&DB, &accesstoken)
-	r.Use(gee.Logger()) //global middleware, calculate response time
-	wechat := r.Group("/wechat")
-	wechat.Use(gee.VerifySignature()) //wechat middleware
+	accesstoken := gee.AccessTokenJson{} //initialize token access program
+	go accesstoken.CountAndReget()       //this goroutine is used to count the remain time of token
+	DB := gee.DB{}                       //initialize database program
+	DB.Init("./user.db")                 //connect to user.db
+	r := gee.New(&DB, &accesstoken)      //initialize engine
+	r.Use(gee.Logger())                  //global middleware, calculate response time
+	wechat := r.Group("/wechat")         //url/wechat URL, used to access information from wechat server
+	wechat.Use(gee.VerifySignature())    //wechat middleware
 	{
-		infoxml := gee.InfoXML{}
-		wechat.GET("/", infoxml.GetWechat)
-		wechat.POST("/", infoxml.PostWechat)
+		infoxml := gee.InfoXML{}             //because format of information from wechat is mainly xml so i create a InfoXML struct
+		wechat.GET("/", infoxml.GetWechat)   //for security
+		wechat.POST("/", infoxml.PostWechat) //handle the msg from wechat server
 	}
 	{
-		msgjson := gee.InfoJSON{}
-		r.POST("/msg", msgjson.SendMsg)
+		msgjson := gee.InfoJSON{}       //becauser wechat api mainly access json format data. so i create a InfoJSON struct
+		r.POST("/msg", msgjson.SendMsg) //handler outer api to send msg to user
 	}
-	log.Fatal(r.Run("0.0.0.0:80"))
+	log.Fatal(r.Run("0.0.0.0:80")) //starting server
 }
 
 //Engine is the uni handler for all requests

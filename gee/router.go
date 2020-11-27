@@ -5,12 +5,14 @@ import (
 	"strings"
 )
 
+//separate URL node by different methods of request
 type router struct {
 	roots map[string]*node
 }
 
 // roots key, eg, roots['GET'] roots['POST']
 
+//return a  router pointer
 func newRouter() *router {
 	return &router{
 		roots: make(map[string]*node),
@@ -18,6 +20,7 @@ func newRouter() *router {
 }
 
 //Only one * is allowed
+//separate url by /
 func parsePattern(pattern string) []string {
 	vs := strings.Split(pattern, "/")
 
@@ -33,6 +36,7 @@ func parsePattern(pattern string) []string {
 	return parts
 }
 
+//add a new router to node
 func (r *router) addRouter(method string, pattern string, handler HandlerFunc) {
 	parts := parsePattern(pattern)
 
@@ -43,6 +47,7 @@ func (r *router) addRouter(method string, pattern string, handler HandlerFunc) {
 	r.roots[method].insert(pattern, parts, handler, 0)
 }
 
+//get router by pattern, if router not exist, return nil, nil
 func (r *router) getRoute(method string, path string) (*node, map[string]string) {
 	searchParts := parsePattern(path)
 	params := make(map[string]string)
@@ -70,6 +75,7 @@ func (r *router) getRoute(method string, path string) (*node, map[string]string)
 	return nil, nil
 }
 
+//append handler into c.handlers if handler exists
 func (r *router) handle(c *Context) {
 	n, params := r.getRoute(c.Method, c.Path) //if request method and path exist, return pattern of node and params
 	if n != nil {

@@ -9,7 +9,8 @@ import (
 //HandlerFunc defines the request handler used by gee
 type HandlerFunc func(*Context)
 
-//RouterGroup ?
+//RouterGroup separate URL into different parts, and different parts
+//can used middlewares independently
 type RouterGroup struct {
 	prefix      string
 	middlewares []HandlerFunc
@@ -18,6 +19,8 @@ type RouterGroup struct {
 }
 
 //Engine implement the interface of  ServerHTTP
+//father of all function
+//absolut core of the framework
 type Engine struct {
 	*RouterGroup
 	router      *router
@@ -54,6 +57,7 @@ func (group *RouterGroup) Group(prefix string) *RouterGroup {
 	return newGroup
 }
 
+//jus like its name, add a new router
 func (group *RouterGroup) addRoute(method string, comp string, handler HandlerFunc) {
 	pattern := group.prefix + comp
 	log.Printf("Roter %4s - %s", method, pattern)
@@ -75,6 +79,7 @@ func (engine *Engine) Run(addr string) (err error) {
 	return http.ListenAndServe(addr, engine)
 }
 
+//to satisfy the requirement of http.ListenAndServe function
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	var middlewares []HandlerFunc
 	for _, group := range engine.groups {

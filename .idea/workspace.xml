@@ -20,14 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e51ef6f-9faa-4ef0-a7ec-2eef58eabed8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gee/database.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/function.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/const.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/const.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/context.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/context.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/database.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/gee.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/gee.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gee/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/gee/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/trie.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/trie.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

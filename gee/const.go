@@ -13,21 +13,26 @@ import (
 )
 
 const (
-	Token          = "gouqunzhu"
-	AppID          = "wx94214222423759cc"
-	Appserect      = "a76e60a158fc7c306b410652a6e90601"
+	//basic information for wechat server
+	Token     = "gouqunzhu"
+	AppID     = "wx94214222423759cc"
+	Appserect = "a76e60a158fc7c306b410652a6e90601"
+	//obviously, this URL is used for accessing access token, it response a json format information
 	AccessTokenURL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
-	MsgXml         = "<xml>\n  <ToUserName>%s</ToUserName>\n  <FromUserName>%s</FromUserName>\n  <CreateTime>%d</CreateTime>\n  <MsgType>%s</MsgType>\n  <Content>%s</Content>\n</xml>"
-	ImgXml         = "<xml>\n  <ToUserName>%s</ToUserName>\n  <FromUserName>%s</FromUserName>\n  <CreateTime>%d</CreateTime>\n  <MsgType>%s</MsgType>\n  <Image>\n    <MediaId>%s</MediaId>\n  </Image>\n</xml>"
-	MsgUrl         = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=%s"
+	//this two xml is used to reply user' message passively
+	MsgXml = "<xml>\n  <ToUserName>%s</ToUserName>\n  <FromUserName>%s</FromUserName>\n  <CreateTime>%d</CreateTime>\n  <MsgType>%s</MsgType>\n  <Content>%s</Content>\n</xml>"
+	ImgXml = "<xml>\n  <ToUserName>%s</ToUserName>\n  <FromUserName>%s</FromUserName>\n  <CreateTime>%d</CreateTime>\n  <MsgType>%s</MsgType>\n  <Image>\n    <MediaId>%s</MediaId>\n  </Image>\n</xml>"
+	//send message actively
+	MsgUrl = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=%s"
 )
 
+//this struct is used to save the access token and remain time
 type AccessTokenJson struct {
 	Access_Token string
 	Expires_In   int
 }
 
-//access token func
+//this function is used to get access token and save it to AccessTokenJson.Access_Token
 func (accesstoken *AccessTokenJson) GetAccessToken() {
 	URL := fmt.Sprintf(AccessTokenURL, AppID, Appserect)
 	resp, err := http.Get(URL)
@@ -48,6 +53,7 @@ func (accesstoken *AccessTokenJson) GetAccessToken() {
 	fmt.Printf("%+v\n", accesstoken)
 }
 
+//a son goroutine will do this function, for counting the remain time and again, get token when time is up
 func (accesstoken *AccessTokenJson) CountAndReget() {
 	for true {
 		if accesstoken.Expires_In > 3600 {
@@ -60,6 +66,7 @@ func (accesstoken *AccessTokenJson) CountAndReget() {
 	}
 }
 
+//this xml liked struct is used to save data from wechat server
 type InfoXML struct {
 	ToUserName   string
 	FromUserName string
@@ -69,6 +76,7 @@ type InfoXML struct {
 	MediaId      string
 }
 
+//this is a handler, to test whether this program can verify the facticity of the message or not
 //localhost/wechat method-GET
 func (infoxml *InfoXML) GetWechat(c *Context) {
 	if c.CheckSignature() {
@@ -78,6 +86,9 @@ func (infoxml *InfoXML) GetWechat(c *Context) {
 	}
 }
 
+//this handler is used to handle the messages from wechat server
+//the messages are mainly created because user send a message to wechat server
+//the format is mainly xml
 //localhost/wechat method-POST
 func (infoxml *InfoXML) PostWechat(c *Context) {
 	body, _ := ioutil.ReadAll(c.Req.Body)
@@ -91,6 +102,10 @@ func (infoxml *InfoXML) PostWechat(c *Context) {
 	}
 }
 
+//my logic judge to users' message
+//when user send a 'id' message, program will check whether users' id exist or not,
+//if not , it will create a new corresponding id for user
+//if yes, it will return id that exist
 //change msg content based on previous content
 func (infoxml *InfoXML) Reply(c *Context) {
 	infoxml.Content = strings.ToLower(infoxml.Content)
@@ -113,12 +128,14 @@ func (infoxml *InfoXML) Reply(c *Context) {
 	}
 }
 
+//this struct is used for outer api access
 type InfoJSON struct {
 	Id      string
 	Msg     string
 	Img_str string
 }
 
+//parse []byte data into  InfoJSON
 func (infojson *InfoJSON) ParseJson(c *Context) {
 	body, _ := ioutil.ReadAll(c.Req.Body)
 	err := json.Unmarshal(body, infojson)
@@ -128,6 +145,8 @@ func (infojson *InfoJSON) ParseJson(c *Context) {
 	}
 }
 
+//for outer api access, when their post request.body is complete
+//it will post a json data to wechat api server to send a message to appointed user
 func (infojson *InfoJSON) SendMsg(c *Context) {
 	infojson.ParseJson(c)
 	OpenId := c.Db.GetOPENID(infojson.Id)
@@ -149,6 +168,7 @@ func (infojson *InfoJSON) SendMsg(c *Context) {
 	c.String(http.StatusOK, "")
 }
 
+//return a json like format
 func (infojson *InfoJSON) JsonReplyFormat(openid, msgtype string) map[string]interface{} {
 	reply := make(map[string]interface{})
 	reply["touser"] = openid

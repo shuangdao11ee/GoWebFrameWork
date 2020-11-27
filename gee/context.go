@@ -9,10 +9,14 @@ import (
 	"sort"
 )
 
-//H no
+//H  json like format, used this type to parse into json format
 type H map[string]interface{}
 
-//Context aaa
+//Context extremely important struct
+//everytime a request coming, gin framework will
+//used this context struct to handle different URL that have been registered
+//in other words, everytime a request come in, a new context will be created
+//to handle different function that have been registered
 type Context struct {
 	//origin objects
 	Writer http.ResponseWriter
@@ -32,11 +36,13 @@ type Context struct {
 	AccessToken *AccessTokenJson
 }
 
+//use to get parameter of :name or * in URL
 func (c *Context) Param(key string) string {
 	value, _ := c.Params[key]
 	return value
 }
 
+//return a pointer context
 func newContext(w http.ResponseWriter, req *http.Request, db *DB, accesstoken *AccessTokenJson) *Context {
 	return &Context{
 		Writer:      w,
@@ -49,11 +55,13 @@ func newContext(w http.ResponseWriter, req *http.Request, db *DB, accesstoken *A
 	}
 }
 
+//stop all the handler actively
 func (c *Context) Fail(code int, err string) {
 	c.index = len(c.handlers)
 	c.JSON(code, H{"message": err})
 }
 
+//Next used to handler functions in c.handlers alternately
 func (c *Context) Next() {
 	c.index++
 	s := len(c.handlers)
@@ -62,35 +70,35 @@ func (c *Context) Next() {
 	}
 }
 
-//PostForm ?
+//PostForm parse json like data
 func (c *Context) PostForm(key string) string {
 	return c.Req.FormValue(key)
 }
 
-//Query ?
+//Query get parameters in url by input corresponding name
 func (c *Context) Query(key string) string {
 	return c.Req.URL.Query().Get(key)
 }
 
-//Status ?
+//Status setting status code
 func (c *Context) Status(code int) {
 	c.StatusCode = code
 	c.Writer.WriteHeader(code)
 }
 
-//SetHeader ?
+//SetHeader setting reply header
 func (c *Context) SetHeader(key string, value string) {
 	c.Writer.Header().Set(key, value)
 }
 
-//String ?
+//String reply string type request body
 func (c *Context) String(code int, format string, value ...interface{}) {
 	c.SetHeader("Content-Type", "text/plain")
 	c.Status(code)
 	c.Writer.Write([]byte(fmt.Sprintf(format, value...)))
 }
 
-//JSON ?
+//JSON reply json body
 func (c *Context) JSON(code int, obj interface{}) {
 	c.SetHeader("Content-Type", "application/json")
 	c.Status(code)
@@ -100,13 +108,13 @@ func (c *Context) JSON(code int, obj interface{}) {
 	}
 }
 
-//Data ?
+//Data reply int only
 func (c *Context) Data(code int, data []byte) {
 	c.Status(code)
 	c.Writer.Write(data)
 }
 
-//HTML ?
+//HTML reply html
 func (c *Context) HTML(code int, html string) {
 	c.SetHeader("Content-Type", "text/html")
 	c.Status(code)
@@ -114,6 +122,8 @@ func (c *Context) HTML(code int, html string) {
 }
 
 //signature check
+//a facticity verify function for all url that include "/wechat"
+//a middleware
 func (c *Context) CheckSignature() bool {
 	signature := c.Query("signature")
 	timestamp := c.Query("timestamp")
