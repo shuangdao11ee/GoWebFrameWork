@@ -20,14 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e51ef6f-9faa-4ef0-a7ec-2eef58eabed8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gee/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/function.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gee/const.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/context.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/context.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gee/gee.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/gee.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/logger.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/trie.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/trie.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,8 +69,15 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gee" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/configure" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="go test Gee" type="GoTestRunConfiguration" factoryName="Go Test" nameIsGenerated="true">
@@ -150,9 +160,9 @@
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
     <state x="1030" y="370" width="400" height="284" key="scopes/0.28.1920.1014@0.28.1920.1014" timestamp="1606273601169" />
-    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup" timestamp="1606272530246">
+    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup" timestamp="1606407534376">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup/0.28.1920.1014@0.28.1920.1014" timestamp="1606272530246" />
+    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup/0.28.1920.1014@0.28.1920.1014" timestamp="1606407534376" />
   </component>
 </project>

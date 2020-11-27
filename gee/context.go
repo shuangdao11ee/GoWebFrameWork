@@ -1,9 +1,12 @@
 package gee
 
 import (
+	"crypto/sha1"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"sort"
 )
 
 //H no
@@ -102,4 +105,32 @@ func (c *Context) HTML(code int, html string) {
 	c.SetHeader("Content-Type", "text/html")
 	c.Status(code)
 	c.Writer.Write([]byte(html))
+}
+
+//signature check
+func (c *Context) CheckSignature() bool {
+	signature := c.Query("signature")
+	timestamp := c.Query("timestamp")
+	nonce := c.Query("nonce")
+	//if one of the necessary parameter is empty, stop the function
+	if signature == "" || timestamp == "" || nonce == "" {
+		return false
+	}
+	//Starting sha1 crypto
+	//get token
+	token := Token
+	//sort 3 of the parameters
+	SHA1_before := []string{token, timestamp, nonce}
+	sort.Strings(SHA1_before)
+	//[]string to string
+	sha1_string := ""
+	for _, v := range SHA1_before {
+		sha1_string += v
+	}
+	//get hash.Hash struct
+	sha1 := sha1.New()
+	io.WriteString(sha1, sha1_string)
+	SHA1_after := fmt.Sprintf("%x", sha1.Sum(nil)) //finishing crypto
+	//verify that result and signature are same or not, if yes, return true
+	return SHA1_after == signature
 }

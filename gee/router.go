@@ -6,17 +6,14 @@ import (
 )
 
 type router struct {
-	roots    map[string]*node
-	handlers map[string]HandlerFunc
+	roots map[string]*node
 }
 
 // roots key, eg, roots['GET'] roots['POST']
-// handlers key eg, handlers['GET-/p/:lang/doc'], handlers['POST-/p/book']
 
 func newRouter() *router {
 	return &router{
-		roots:    make(map[string]*node),
-		handlers: make(map[string]HandlerFunc),
+		roots: make(map[string]*node),
 	}
 }
 
@@ -39,13 +36,11 @@ func parsePattern(pattern string) []string {
 func (r *router) addRouter(method string, pattern string, handler HandlerFunc) {
 	parts := parsePattern(pattern)
 
-	key := method + "-" + pattern
 	_, ok := r.roots[method] //GET OR POST OR PUT, roots is used to separate these node
 	if !ok {
 		r.roots[method] = &node{}
 	}
-	r.roots[method].insert(pattern, parts, 0)
-	r.handlers[key] = handler
+	r.roots[method].insert(pattern, parts, handler, 0)
 }
 
 func (r *router) getRoute(method string, path string) (*node, map[string]string) {
@@ -79,8 +74,7 @@ func (r *router) handle(c *Context) {
 	n, params := r.getRoute(c.Method, c.Path) //if request method and path exist, return pattern of node and params
 	if n != nil {
 		c.Params = params
-		key := c.Method + "-" + n.pattern
-		c.handlers = append(c.handlers, r.handlers[key]) //insert handler after middleware
+		c.handlers = append(c.handlers, n.handler) //insert handler after middleware
 	} else {
 		c.handlers = append(c.handlers, func(c *Context) {
 			c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)

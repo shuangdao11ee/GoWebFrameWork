@@ -5,10 +5,11 @@ import (
 )
 
 type node struct {
-	pattern  string  // 待匹配路由， 例如/p/:lang
-	part     string  // 路由中的一部分， 例如:lang
-	children []*node // 子节点， 例如[doc, tutorial, intro]
-	isWild   bool    //是否mohu匹配，part 含有 ： 或 *时为true
+	pattern  string      // 待匹配路由， 例如/p/:lang
+	part     string      // 路由中的一部分， 例如:lang
+	children []*node     // 子节点， 例如[doc, tutorial, intro]
+	isWild   bool        //是否hu匹配，part 含有 ： 或 *时为true
+	handler  HandlerFunc //if pattern exist, handler exist
 }
 
 //第一个匹配成功的节点，用于插入
@@ -32,9 +33,10 @@ func (n *node) matchChildren(part string) []*node {
 	return nodes
 }
 
-func (n *node) insert(pattern string, parts []string, height int) {
+func (n *node) insert(pattern string, parts []string, handler HandlerFunc, height int) {
 	if len(parts) == height {
 		n.pattern = pattern
+		n.handler = handler
 		return
 	}
 
@@ -44,7 +46,7 @@ func (n *node) insert(pattern string, parts []string, height int) {
 		child = &node{part: part, isWild: part[0] == ':' || part[0] == '*'}
 		n.children = append(n.children, child)
 	}
-	child.insert(pattern, parts, height+1)
+	child.insert(pattern, parts, handler, height+1)
 }
 
 func (n *node) search(parts []string, height int) *node {
