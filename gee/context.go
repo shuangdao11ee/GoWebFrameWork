@@ -26,6 +26,10 @@ type Context struct {
 	//middlewares
 	handlers []HandlerFunc
 	index    int
+	//database
+	Db *DB
+	//accesstoken
+	AccessToken *AccessTokenJson
 }
 
 func (c *Context) Param(key string) string {
@@ -33,13 +37,15 @@ func (c *Context) Param(key string) string {
 	return value
 }
 
-func newContext(w http.ResponseWriter, req *http.Request) *Context {
+func newContext(w http.ResponseWriter, req *http.Request, db *DB, accesstoken *AccessTokenJson) *Context {
 	return &Context{
-		Writer: w,
-		Req:    req,
-		Path:   req.URL.Path,
-		Method: req.Method,
-		index:  -1,
+		Writer:      w,
+		Req:         req,
+		Path:        req.URL.Path,
+		Method:      req.Method,
+		index:       -1,
+		Db:          db,
+		AccessToken: accesstoken,
 	}
 }
 

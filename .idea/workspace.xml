@@ -20,17 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e51ef6f-9faa-4ef0-a7ec-2eef58eabed8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/function.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gee/const.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gee/database.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/function.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/const.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/const.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/context.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/context.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gee/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gee/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gee/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gee/trie.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/trie.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/gee.go" beforeDir="false" afterPath="$PROJECT_DIR$/gee/gee.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/gee/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +47,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GoLibraries">
-    <option name="indexEntireGoPath" value="false" />
+    <option name="urls">
+      <list>
+        <option value="file://$USER_HOME$/go" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1kjQ1pD6sPPEBhMGYTDxcqykzj9" />
   <component name="ProjectViewState">
@@ -64,13 +65,13 @@
     <property name="ask.go.tool.to.install.GoGolangCILintTaskConsumer" value="true" />
     <property name="ask.go.tool.to.install.GoImportsTaskConsumer" value="true" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
-    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="true" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hello.go" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -120,10 +121,10 @@
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
     <state x="755" y="371" width="400" height="334" key="#Go_Modules/0.28.1920.1014@0.28.1920.1014" timestamp="1606211325228" />
-    <state x="418" y="193" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606211933254">
+    <state x="418" y="193" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606463113830">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state x="418" y="193" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1014@0.28.1920.1014" timestamp="1606211933254" />
+    <state x="418" y="193" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.28.1920.1014@0.28.1920.1014" timestamp="1606463113830" />
     <state x="707" y="334" width="495" height="409" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606211845981">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
@@ -132,37 +133,41 @@
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
     <state x="893" y="268" width="682" height="488" key="EditFileWatcherDialog/0.28.1920.1014@0.28.1920.1014" timestamp="1606273610818" />
-    <state x="1022" y="252" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606273233729">
+    <state x="1022" y="252" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606456992484">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state x="1022" y="252" width="424" height="491" key="FileChooserDialogImpl/0.28.1920.1014@0.28.1920.1014" timestamp="1606273233729" />
-    <state width="1872" height="261" key="GridCell.Tab.0.bottom" timestamp="1606212411167">
+    <state x="1022" y="252" width="424" height="491" key="FileChooserDialogImpl/0.28.1920.1014@0.28.1920.1014" timestamp="1606456992484" />
+    <state width="1872" height="261" key="GridCell.Tab.0.bottom" timestamp="1606456511938">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state width="1872" height="261" key="GridCell.Tab.0.bottom/0.28.1920.1014@0.28.1920.1014" timestamp="1606212411167" />
-    <state width="1872" height="261" key="GridCell.Tab.0.center" timestamp="1606212411167">
+    <state width="1872" height="261" key="GridCell.Tab.0.bottom/0.28.1920.1014@0.28.1920.1014" timestamp="1606456511938" />
+    <state width="1872" height="261" key="GridCell.Tab.0.center" timestamp="1606456511938">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state width="1872" height="261" key="GridCell.Tab.0.center/0.28.1920.1014@0.28.1920.1014" timestamp="1606212411167" />
-    <state width="1872" height="261" key="GridCell.Tab.0.left" timestamp="1606212411167">
+    <state width="1872" height="261" key="GridCell.Tab.0.center/0.28.1920.1014@0.28.1920.1014" timestamp="1606456511938" />
+    <state width="1872" height="261" key="GridCell.Tab.0.left" timestamp="1606456511938">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state width="1872" height="261" key="GridCell.Tab.0.left/0.28.1920.1014@0.28.1920.1014" timestamp="1606212411167" />
-    <state width="1872" height="261" key="GridCell.Tab.0.right" timestamp="1606212411167">
+    <state width="1872" height="261" key="GridCell.Tab.0.left/0.28.1920.1014@0.28.1920.1014" timestamp="1606456511938" />
+    <state width="1872" height="261" key="GridCell.Tab.0.right" timestamp="1606456511938">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state width="1872" height="261" key="GridCell.Tab.0.right/0.28.1920.1014@0.28.1920.1014" timestamp="1606212411167" />
-    <state x="522" y="230" width="1007" height="737" key="SettingsEditor" timestamp="1606273613821">
+    <state width="1872" height="261" key="GridCell.Tab.0.right/0.28.1920.1014@0.28.1920.1014" timestamp="1606456511938" />
+    <state x="522" y="230" width="1007" height="737" key="SettingsEditor" timestamp="1606456363151">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state x="522" y="230" width="1007" height="737" key="SettingsEditor/0.28.1920.1014@0.28.1920.1014" timestamp="1606273613821" />
+    <state x="522" y="230" width="1007" height="737" key="SettingsEditor/0.28.1920.1014@0.28.1920.1014" timestamp="1606456363151" />
+    <state x="801" y="289" width="307" height="499" key="refactoring.ChangeSignatureDialog" timestamp="1606487073620">
+      <screen x="0" y="28" width="1920" height="1014" />
+    </state>
+    <state x="801" y="289" width="307" height="499" key="refactoring.ChangeSignatureDialog/0.28.1920.1014@0.28.1920.1014" timestamp="1606487073620" />
     <state x="1030" y="370" width="400" height="284" key="scopes" timestamp="1606273601169">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
     <state x="1030" y="370" width="400" height="284" key="scopes/0.28.1920.1014@0.28.1920.1014" timestamp="1606273601169" />
-    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup" timestamp="1606407534376">
+    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup" timestamp="1606466191029">
       <screen x="0" y="28" width="1920" height="1014" />
     </state>
-    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup/0.28.1920.1014@0.28.1920.1014" timestamp="1606407534376" />
+    <state x="623" y="250" width="672" height="678" key="search.everywhere.popup/0.28.1920.1014@0.28.1920.1014" timestamp="1606466191029" />
   </component>
 </project>

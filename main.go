@@ -6,15 +6,23 @@ import (
 )
 
 func main() {
-	r := gee.New()
+	accesstoken := gee.AccessTokenJson{}
+	go accesstoken.CountAndReget()
+	DB := gee.DB{}
+	DB.Init("./user.db")
+	r := gee.New(&DB, &accesstoken)
 	r.Use(gee.Logger()) //global middleware, calculate response time
 	wechat := r.Group("/wechat")
 	wechat.Use(gee.VerifySignature()) //wechat middleware
 	{
-		wechat.GET("/", GetWechat)
-		wechat.POST("/", PostWechat)
+		infoxml := gee.InfoXML{}
+		wechat.GET("/", infoxml.GetWechat)
+		wechat.POST("/", infoxml.PostWechat)
 	}
-	go GetAccessToken()
+	{
+		msgjson := gee.InfoJSON{}
+		r.POST("/msg", msgjson.SendMsg)
+	}
 	log.Fatal(r.Run("0.0.0.0:80"))
 }
 

@@ -20,8 +20,10 @@ type RouterGroup struct {
 //Engine implement the interface of  ServerHTTP
 type Engine struct {
 	*RouterGroup
-	router *router
-	groups []*RouterGroup // store all groups
+	router      *router
+	groups      []*RouterGroup // store all groups
+	db          *DB
+	accesstoken *AccessTokenJson
 }
 
 //Use is defined to add middleware to group
@@ -30,10 +32,12 @@ func (group *RouterGroup) Use(middlewares ...HandlerFunc) {
 }
 
 //New is the construceor of gee.Engine
-func New() *Engine {
+func New(db *DB, accesstoken *AccessTokenJson) *Engine {
 	engine := &Engine{router: newRouter()}
 	engine.RouterGroup = &RouterGroup{engine: engine}
 	engine.groups = []*RouterGroup{engine.RouterGroup}
+	engine.db = db
+	engine.accesstoken = accesstoken
 	return engine
 }
 
@@ -78,7 +82,7 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			middlewares = append(middlewares, group.middlewares...) //put middlewares that satisfied the requirement into context.handlers
 		}
 	}
-	c := newContext(w, req)
+	c := newContext(w, req, engine.db, engine.accesstoken)
 	c.handlers = middlewares
 	engine.router.handle(c)
 }
